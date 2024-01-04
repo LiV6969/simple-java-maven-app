@@ -33,8 +33,9 @@ jobs:
         echo 'The following complex command behaves similarly to the previous one but'
         echo 'extracts the value of the <version/> element within <project/> instead.'
         set -x
-        VERSION=`mvn help:evaluate -Dexpression=project.version | grep "^[^\[]"`
+        VERSION=$(mvn help:evaluate -Dexpression=project.version | grep "^[^\[]")
         set +x
+
         # Parse the version components
         MAJOR=$(echo $VERSION | cut -d. -f1)
         MINOR=$(echo $VERSION | cut -d. -f2)
@@ -46,11 +47,12 @@ jobs:
         # Create the new version
         NEW_VERSION="$MAJOR.$MINOR.$PATCH"
 
-        # Replace the old version with the new version in the pom.xml file
-	mvn build-helper:parse-version versions:set "-DnewVersion=${NEW_VERSION}"
+        # Use Maven to set the new version
+        mvn build-helper:parse-version versions:set "-DnewVersion=${NEW_VERSION}"
 
         # Print the new version
         echo "New version: $(mvn help:evaluate -Dexpression=project.version | grep "^[^\[]")"
+
         
     - name: Build with Maven
       run: mvn -B package --file pom.xml
