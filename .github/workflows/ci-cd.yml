@@ -1,0 +1,60 @@
+# This workflow will build a Java project with Maven, and cache/restore any dependencies to improve the workflow execution time
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-java-with-maven
+
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support
+# documentation.
+
+name: Java CI with Maven
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up JDK 17
+      uses: actions/setup-java@v3
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+        cache: maven
+        
+    - name: Increase Patch version
+      run: |
+        echo 'The following complex command behaves similarly to the previous one but'
+        echo 'extracts the value of the <version/> element within <project/> instead.'
+        set -x
+        VERSION=`mvn help:evaluate -Dexpression=project.version | grep "^[^\[]"`
+        set +x
+        # Parse the version components
+        MAJOR=$(echo $VERSION | cut -d. -f1)
+        MINOR=$(echo $VERSION | cut -d. -f2)
+        PATCH=$(echo $VERSION | cut -d. -f3)
+
+        # Increment the Patch version
+        PATCH=$((PATCH + 1))
+
+        # Create the new version
+        NEW_VERSION="$MAJOR.$MINOR.$PATCH"
+
+        # Replace the old version with the new version in the pom.xml file
+        sed -i "s/<version>$VERSION<\/version>/<version>$NEW_VERSION<\/version>/" pom.xml
+
+        # Print the new version
+        echo "New version: $NEW_VERSION"
+        
+    - name: Build with Maven
+      run: mvn -B package --file pom.xml
+
+    # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
+    - name: Update dependency graph
+      uses: advanced-security/maven-dependency-submission-action@571e99aab1055c2e71a1e2309b9691de18d6b7d6
