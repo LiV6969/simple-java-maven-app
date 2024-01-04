@@ -47,10 +47,10 @@ jobs:
         NEW_VERSION="$MAJOR.$MINOR.$PATCH"
 
         # Replace the old version with the new version in the pom.xml file
-	sed -i 's/<version>$VERSION</version>|<version>$NEW_VERSION</version>/' pom.xml
+	mvn build-helper:parse-version versions:set "-DnewVersion=${NEW_VERSION}"
 
         # Print the new version
-        echo "New version: $NEW_VERSION"
+        echo "New version: $(mvn help:evaluate -Dexpression=project.version | grep "^[^\[]")"
         
     - name: Build with Maven
       run: mvn -B package --file pom.xml
