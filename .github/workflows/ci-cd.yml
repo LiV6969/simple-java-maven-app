@@ -60,3 +60,20 @@ jobs:
     # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
     - name: Update dependency graph
       uses: advanced-security/maven-dependency-submission-action@571e99aab1055c2e71a1e2309b9691de18d6b7d6
+
+    - name: Increase Patch version
+      run: |
+        echo 'The following complex command behaves similarly to the previous one but'
+        echo 'extracts the value of the <version/> element within <project/> instead.'
+        set -x
+        NEW_VERSION=$(mvn help:evaluate -Dexpression=project.version | grep "^[^\[]")
+        set +x
+
+    - name: Build Docker image
+      run: |
+        echo 'The following complex command extracts the value of the <name/> element'
+        echo 'within <project/> of your Java/Maven project''s "pom.xml" file.'
+        set -x
+        NAME=$(mvn help:evaluate -Dexpression=project.name | grep "^[^\[]")
+        set +x
+        docker build -t ${{ env.DOCKER_IMAGE_NAME }}:${NEW_VERSION} --build-arg NAME=${NAME} --build-arg NEW_VERSION=${NEW_VERSION} .
