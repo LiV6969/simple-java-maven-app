@@ -76,5 +76,5 @@ jobs:
         set -x
         NAME=$(mvn help:evaluate -Dexpression=project.name | grep "^[^\[]")
         set +x
-        docker build -t ${{ env.DOCKER_IMAGE_NAME }}:${NEW_VERSION} --build-arg NAME=${NAME} --build-arg NEW_VERSION=${NEW_VERSION} .
+        docker build -t ${NAME}:${NEW_VERSION} --build-arg NAME=${NAME} --build-arg NEW_VERSION=${NEW_VERSION} .
 
