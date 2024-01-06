@@ -1,5 +1,5 @@
 # Stage 1: Build stage
-FROM maven:3.6-openjdk-11-slim as build
+FROM maven:3.8.6-openjdk-11 AS build
 WORKDIR /app
 COPY . .
 RUN mvn validate
