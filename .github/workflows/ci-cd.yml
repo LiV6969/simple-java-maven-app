@@ -63,8 +63,5 @@ jobs:
 
     - name: Build Docker image
       run: |
-        NAME=${NAME#-}
-        echo "Debug: NAME=${NAME}" 
-        echo "Debug: NEW_VERSION=${NEW_VERSION}"
-        docker build --build-arg NAME="${NAME}" -t "${NAME}" . 
+        docker build -t needfix . 
 
