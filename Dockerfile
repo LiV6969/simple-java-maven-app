@@ -13,5 +13,5 @@ ARG NAME
 ARG NEW_VERSION
 WORKDIR /app
 COPY --from=build /app/target/${NAME}-${NEW_VERSION}.jar /app/target/${NAME}-${NEW_VERSION}.jar
-CMD ["java", "-jar", "/app/target/${NAME}-${NEW_VERSION}.jar"]
+CMD ["java", "-jar", "/app/target/needfix.jar"]
 
