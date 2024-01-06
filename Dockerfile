@@ -1,5 +1,5 @@
 # Stage 1: Build stage
-FROM maven:3.6.0-jdk-17-slim AS build
+FROM maven:3.6.0-jdk-11-slim AS build
 WORKDIR /app
 COPY . .
 RUN mvn validate
