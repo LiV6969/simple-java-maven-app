@@ -8,7 +8,7 @@ RUN mvn clean package
 RUN mvn install
 
 # Stage 2: Final image
-FROM openjdk:17-jre-slim
+FROM openjdk:11-jre-slim
 ARG NAME
 ARG NEW_VERSION
 WORKDIR /app
