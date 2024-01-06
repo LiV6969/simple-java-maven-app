@@ -64,6 +64,7 @@ jobs:
 
     - name: Build Docker image
       run: |
+        NAME=${NAME#-}
         docker build --build-arg NAME=${NAME} --build-arg NEW_VERSION=${NEW_VERSION} -t ${NAME}:${NEW_VERSION} .
 
 
