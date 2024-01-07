@@ -10,6 +10,7 @@ env:
   NAME: ""
   VERSION: ""
   NEW_VERSION: ""
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -33,7 +34,7 @@ jobs:
           echo "VERSION: $VERSION"
           echo "##[set-output name=NAME;]$NAME"
           echo "##[set-output name=VERSION;]$VERSION"
-        id: set-env
+          id: set-env
 
       - name: Increase Patch version
         run: |
@@ -47,8 +48,8 @@ jobs:
 
           # Create the new version
           NEW_VERSION="$MAJOR.$MINOR.$PATCH"
-	  echo "##[set-output name=NEW_VERSION;]$NEW_VERSION"
-	id: set-env
+          echo "##[set-output name=NEW_VERSION;]$NEW_VERSION"
+
           # Use Maven to set the new version using versions-maven-plugin
           mvn versions:set -DnewVersion=$NEW_VERSION
 
@@ -57,5 +58,5 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build --build-arg NAME=${{ steps.set-env.outputs.NAME }} --build-arg NEW_VERSION=$NEW_VERSION -t ${{ steps.set-env.outputs.NAME }} .
+          docker build --build-arg NAME=${{ steps.set-env.outputs.NAME }} --build-arg NEW_VERSION=${{ steps.set-env.outputs.NEW_VERSION }} -t ${{ steps.set-env.outputs.NAME }} .
 
