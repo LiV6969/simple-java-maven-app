@@ -77,7 +77,11 @@ jobs:
 
       - name: Checkout code
         uses: actions/checkout@v2
-      
+
+      - name: installs your Maven-built Java application
+        run: |
+          mvn jar:jar install:install help:evaluate -Dexpression=project.name
+          
       - name: Run playbook
         uses: dawidd6/action-ansible-playbook@v2
         with:
