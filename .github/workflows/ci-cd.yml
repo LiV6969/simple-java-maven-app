@@ -10,6 +10,8 @@ env:
   NAME: ""
   VERSION: ""
   NEW_VERSION: ""
+  ANSIBLE_PLAYBOOK_PATH: ./ansible/playbook.yml
+  ANSIBLE_INVENTORY_PATH: ./ansible/inventory.ini
 
 jobs:
   build:
@@ -78,13 +80,9 @@ jobs:
       - name: Deloy wth ansible playbook
         uses: dawidd6/action-ansible-playbook@v2
         with:
-          # Required, playbook filepath
-          playbook: playbook.yml
-          # Optional, directory where playbooks live
+          playbook: ${{ env.ANSIBLE_PLAYBOOK_PATH }}
           directory: ./ansible/
-          # Optional, SSH private key
           key: ${{secrets.SSH_PRIVATE_KEY}}
-          # Optional, literal inventory file contents
-          inventory: inventory.ini
+          inventory: ${{ env.ANSIBLE_INVENTORY_PATH }}
           run: |
-            ansible-playbook -i ./ansible/inventory.ini ./ansible/playbook.yml
+            ansible-playbook -i ${{ env.ANSIBLE_INVENTORY_PATH }} ${{ env.ANSIBLE_PLAYBOOK_PATH }}
