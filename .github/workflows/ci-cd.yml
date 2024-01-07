@@ -74,4 +74,17 @@ jobs:
 
           docker tag "${NAME}" "${DOCKERHUB_USERNAME}/${NAME}:${NEW_VERSION}"
           docker push "${DOCKERHUB_USERNAME}/${NAME}:${NEW_VERSION}"
-        
+
+      - name: Deloy wth ansible playbook
+        uses: dawidd6/action-ansible-playbook@v2
+        with:
+          # Required, playbook filepath
+          playbook: playbook.yml
+          # Optional, directory where playbooks live
+          directory: ./ansible/
+          # Optional, SSH private key
+          key: ${{secrets.SSH_PRIVATE_KEY}}
+          # Optional, literal inventory file contents
+          inventory: inventoru.ini
+          run: |
+            ansible-playbook -i inventory.ini playbook.yml
