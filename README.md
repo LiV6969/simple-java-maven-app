@@ -1,15 +1,52 @@
-# simple-java-maven-app
+# My Awesome DevOps Project
 
-This repository is for the
-[Build a Java app with Maven](https://jenkins.io/doc/tutorials/build-a-java-app-with-maven/)
-tutorial in the [Jenkins User Documentation](https://jenkins.io/doc/).
+A project that leverages DevOps practices for efficient development, testing, and deployment.
 
-The repository contains a simple Java application which outputs the string
-"Hello world!" and is accompanied by a couple of unit tests to check that the
-main application works as expected. The results of these tests are saved to a
-JUnit XML report.
+## Table of Contents
 
-The `jenkins` directory contains an example of the `Jenkinsfile` (i.e. Pipeline)
-you'll be creating yourself during the tutorial and the `jenkins/scripts` subdirectory
-contains a shell script with commands that are executed when Jenkins processes
-the "Deliver" stage of your Pipeline.
+- [Introduction](#introduction)
+- [Features](#features)
+- [Getting Started](#getting-started)
+  - [Prerequisites](#prerequisites)
+  - [Installation](#installation)
+- [Technologies](#technologies)
+
+
+## Introduction
+
+Welcome to My Awesome DevOps Project! This project is designed to showcase best practices in DevOps, providing a streamlined development and deployment pipeline.
+
+## Features
+
+- Continuous Integration with GitHub workflow
+- Containerized application with Docker
+- Infrastructure as Code using Ansible
+- Automated deployment to AWS EC2 instances
+
+
+## Getting Started
+
+To get started with this project, follow the steps below.
+
+### Prerequisites
+
+Make sure you have the following installed:
+
+- Docker
+
+### Installation
+
+ Clone the repository:
+
+   ```bash
+   git clone https://github.com/yourusername/my-awesome-devops-project.git
+   ```
+
+## Technologies
+
+- GitHub workflow
+- Docker
+- Ansible
+- AWS
+
+
