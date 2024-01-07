@@ -33,6 +33,5 @@
         name: weather_app_container
         image: "{{ container_image }}"
         state: started
-        restart_policy: always
         ports:
           - "80:5000"
