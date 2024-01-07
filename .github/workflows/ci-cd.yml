@@ -25,22 +25,22 @@ jobs:
           distribution: 'temurin'
           cache: maven
 
-      - name: Get Maven Project Name and Version
+      - name: Set Environment Variables
         run: |
           export NAME=$(mvn help:evaluate -Dexpression=project.name | grep "^[^\[]")
           export VERSION=$(mvn help:evaluate -Dexpression=project.version | grep "^[^\[]")
-
-      - name: Debug Maven Properties
-        run: |
           echo "NAME: $NAME"
           echo "VERSION: $VERSION"
+          echo "##[set-output name=NAME;]$NAME"
+          echo "##[set-output name=VERSION;]$VERSION"
+        id: set-env
 
       - name: Increase Patch version
         run: |
           # Parse the version components
-          MAJOR=$(echo $VERSION | cut -d. -f1)
-          MINOR=$(echo $VERSION | cut -d. -f2)
-          PATCH=$(echo $VERSION | cut -d. -f3)
+          MAJOR=$(echo ${{ steps.set-env.outputs.VERSION }} | cut -d. -f1)
+          MINOR=$(echo ${{ steps.set-env.outputs.VERSION }} | cut -d. -f2)
+          PATCH=$(echo ${{ steps.set-env.outputs.VERSION }} | cut -d. -f3)
 
           # Increment the Patch version
           PATCH=$((PATCH + 1))
@@ -52,10 +52,9 @@ jobs:
           mvn build-helper:parse-version versions:set "-DnewVersion=${NEW_VERSION}"
 
           # Print the new version
-          echo "New version: $VERSION"
+          echo "New version: ${{ steps.set-env.outputs.VERSION }}"
 
       - name: Build Docker image
         run: |
-          docker build -t $NAME .
-
+          docker build -t ${{ steps.set-env.outputs.NAME }} .
 
