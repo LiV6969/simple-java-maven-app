@@ -82,8 +82,8 @@ jobs:
       - name: Deloy wth ansible playbook
         uses: dawidd6/action-ansible-playbook@v2
         with:
-          directory: ./ansible
-          playbook: ./ansible/playbook.yml
+          directory: .
+          playbook: playbook.yml
           key: ${{secrets.SSH_PRIVATE_KEY}}
           inventory: |
             [all]${{ secrets.EC2_IP }}
