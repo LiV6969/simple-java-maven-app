@@ -76,6 +76,9 @@ jobs:
           docker tag "${NAME}" "${DOCKERHUB_USERNAME}/${NAME}:${NEW_VERSION}"
           docker push "${DOCKERHUB_USERNAME}/${NAME}:${NEW_VERSION}"
 
+      - name: Checkout code
+        uses: actions/checkout@v2
+      
       - name: Deloy wth ansible playbook
         uses: dawidd6/action-ansible-playbook@v2
         with:
