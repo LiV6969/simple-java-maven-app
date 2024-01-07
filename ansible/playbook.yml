@@ -4,7 +4,7 @@
   become: yes
   vars:
     ssh_key: ./aws-key.pem
-    container_image: "liv6969/my-app:${{ NEW_VERSION }}"
+    container_image: liv6969/my-app:latest
 
   tasks:
     - name: Add Docker GPG apt Key
