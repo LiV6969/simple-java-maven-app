@@ -78,12 +78,13 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
       
-      - name: Deploy wth ansible playbook
+      - name: Run playbook
         uses: dawidd6/action-ansible-playbook@v2
         with:
           directory: ./.github/workflows/ansible
           playbook: ./.github/workflows/ansible/playbook.yml
           key: ${{ secrets.SSH_KEY_JOSKA_EC2 }}
           inventory: |
-            [all]${{ secrets.EC2_IP }}  
+            [all]
+            ${{ secrets.EC2_IP }}  
             
