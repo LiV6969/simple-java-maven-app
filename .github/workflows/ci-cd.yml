@@ -48,12 +48,13 @@ jobs:
           # Create the new version
           NEW_VERSION="$MAJOR.$MINOR.$PATCH"
 
-          # Use Maven to set the new version
+          # Use Maven to set the new version using versions-maven-plugin
           mvn versions:set -DnewVersion=$NEW_VERSION
 
           # Print the new version
-          echo "New version: ${{ steps.set-env.outputs.NEW_VERSION }}"
+          echo "New version: $NEW_VERSION"
 
       - name: Build Docker image
         run: |
-	  docker build --build-arg NAME=${{ steps.set-env.outputs.NAME }} --build-arg NEW_VERSION=$NEW_VERSION -t ${{ steps.set-env.outputs.NAME }} .
+          docker build --build-arg NAME=${{ steps.set-env.outputs.NAME }} --build-arg NEW_VERSION=$NEW_VERSION -t ${{ steps.set-env.outputs.NAME }} .
+
