@@ -12,6 +12,6 @@ ARG NEW_VERSION
 WORKDIR /app
 RUN echo "NAME: $NAME"
 RUN echo "NEW_VERSION: $NEW_VERSION"
-COPY --from=build /app/target/${NAME}-${NEW_VERSION}.jar /app/target/${NAME}-${NEW_VERSION}.jar
-CMD ["java", "-jar", "/app/target/${NAME}-${NEW_VERSION}.jar"]
-
+COPY --from=build /app/target/${NAME}-${NEW_VERSION}.jar /app/target/app.jar
+EXPOSE 5000 
+CMD ["java", "-jar", "/app/target/app.jar"]
