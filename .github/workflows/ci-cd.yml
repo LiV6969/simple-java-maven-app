@@ -85,6 +85,6 @@ jobs:
           # Optional, SSH private key
           key: ${{secrets.SSH_PRIVATE_KEY}}
           # Optional, literal inventory file contents
-          inventory: inventoru.ini
+          inventory: inventory.ini
           run: |
             ansible-playbook -i inventory.ini playbook.yml
