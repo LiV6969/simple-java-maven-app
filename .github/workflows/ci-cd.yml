@@ -74,7 +74,8 @@ jobs:
 
           docker tag "${NAME}" "${DOCKERHUB_USERNAME}/${NAME}:${NEW_VERSION}"
           docker push "${DOCKERHUB_USERNAME}/${NAME}:${NEW_VERSION}"
-           docker push "${DOCKERHUB_USERNAME}/${NAME}:latest"
+          docker tag "${NAME}" "${DOCKERHUB_USERNAME}/${NAME}:latest"
+          docker push "${DOCKERHUB_USERNAME}/${NAME}:latest"
 
       - name: Checkout code
         uses: actions/checkout@v2
