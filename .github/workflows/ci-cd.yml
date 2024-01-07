@@ -10,6 +10,7 @@ env:
   NAME: ""
   VERSION: ""
   NEW_VERSION: ""
+  ANSIBLE_PLAYBOOK_PATH: ./ansible/playbook.yml
 
 jobs:
   build:
@@ -52,39 +53,38 @@ jobs:
           # Print the new version
           echo "New version: $NEW_VERSION"
 
-      - name: Build Docker image
-        run: |
-          docker build --build-arg NAME=$NAME --build-arg NEW_VERSION=$NEW_VERSION -t $NAME .
+      # - name: Build Docker image
+      #   run: |
+      #     docker build --build-arg NAME=$NAME --build-arg NEW_VERSION=$NEW_VERSION -t $NAME .
 
-      - name: Log in to Docker Hub
-        uses: docker/login-action@f4ef78c080cd8ba55a85445d5b36e214a81df20a
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+      # - name: Log in to Docker Hub
+      #   uses: docker/login-action@f4ef78c080cd8ba55a85445d5b36e214a81df20a
+      #   with:
+      #     username: ${{ secrets.DOCKERHUB_USERNAME }}
+      #     password: ${{ secrets.DOCKERHUB_PASSWORD }}
     
-      - name: Push Docker image to Docker Hub
-        env:
-          DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
-          DOCKERHUB_PASSWORD: ${{ secrets.DOCKERHUB_PASSWORD }}
+      # # - name: Push Docker image to Docker Hub
+      #   env:
+      #     DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+      #     DOCKERHUB_PASSWORD: ${{ secrets.DOCKERHUB_PASSWORD }}
 
-        run: |
-          NAME=${NAME#-}
-          echo "Debug: NAME=${NAME}" 
-          echo "Debug: NEW_VERSION=${NEW_VERSION}"
+      #   run: |
+      #     NAME=${NAME#-}
+      #     echo "Debug: NAME=${NAME}" 
+      #     echo "Debug: NEW_VERSION=${NEW_VERSION}"
 
-          docker tag "${NAME}" "${DOCKERHUB_USERNAME}/${NAME}:${NEW_VERSION}"
-          docker push "${DOCKERHUB_USERNAME}/${NAME}:${NEW_VERSION}"
+      #     docker tag "${NAME}" "${DOCKERHUB_USERNAME}/${NAME}:${NEW_VERSION}"
+      #     docker push "${DOCKERHUB_USERNAME}/${NAME}:${NEW_VERSION}"
 
+      - name: Checkout code
+        uses: actions/checkout@v2
+      
       - name: Deloy wth ansible playbook
         uses: dawidd6/action-ansible-playbook@v2
         with:
-          # Required, playbook filepath
-          playbook: playbook.yml
-          # Optional, directory where playbooks live
-          directory: ./ansible/
-          # Optional, SSH private key
+          directory: ./ansible
+          playbook: ./ansible/playbook.yml
           key: ${{secrets.SSH_PRIVATE_KEY}}
-          # Optional, literal inventory file contents
-          inventory: inventoru.ini
-          run: |
-            ansible-playbook -i inventory.ini playbook.yml
+          inventory: |
+            [all]${{ secrets.EC2_IP }}
+          
