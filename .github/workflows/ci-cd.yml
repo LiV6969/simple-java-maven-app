@@ -28,8 +28,13 @@ jobs:
 
       - name: Set Environment Variables
         run: |
-          echo "NAME=$(mvn help:evaluate -Dexpression=project.name | grep '^[^\[]')" >> $GITHUB_ENV
-          echo "VERSION=$(mvn help:evaluate -Dexpression=project.version | grep '^[^\[]')" >> $GITHUB_ENV
+          export NAME=$(mvn help:evaluate -Dexpression=project.name | grep "^[^\[]")
+          export VERSION=$(mvn help:evaluate -Dexpression=project.version | grep "^[^\[]")
+          echo "NAME: $NAME"
+          echo "VERSION: $VERSION"
+          echo "##[set-output name=NAME;]$NAME"
+          echo "##[set-output name=VERSION;]$VERSION"
+          id: set-env
 
       - name: Increase Patch version
         run: |
