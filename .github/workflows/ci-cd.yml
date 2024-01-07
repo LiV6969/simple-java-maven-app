@@ -79,8 +79,7 @@ jobs:
         uses: actions/checkout@v2
       
       - name: Deploy wth ansible playbook
-      - uses: dawidd6/action-ansible-playbook@v2
-      - uses: ./.github/actions/ansible
+        uses: dawidd6/action-ansible-playbook@v2
         with:
           directory: ./.github/workflows/ansible
           playbook: ./.github/workflows/ansible/playbook.yml
