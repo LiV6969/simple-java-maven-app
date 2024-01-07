@@ -9,7 +9,7 @@ on:
 env:
   NAME: ""
   VERSION: ""
-
+  NEW_VERSION: ""
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -47,7 +47,8 @@ jobs:
 
           # Create the new version
           NEW_VERSION="$MAJOR.$MINOR.$PATCH"
-
+	  echo "##[set-output name=NEW_VERSION;]$NEW_VERSION"
+	id: set-env
           # Use Maven to set the new version using versions-maven-plugin
           mvn versions:set -DnewVersion=$NEW_VERSION
 
