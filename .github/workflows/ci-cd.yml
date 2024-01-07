@@ -34,7 +34,7 @@ jobs:
           echo "VERSION: $VERSION"
           echo "NAME=$NAME" >> "$GITHUB_ENV"
           echo "VERSION=$VERSION" >> "$GITHUB_ENV"
-          id: set-env
+    
 
       - name: Increase Patch version
         run: |
