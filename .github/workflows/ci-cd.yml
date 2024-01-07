@@ -10,8 +10,8 @@ env:
   NAME: ""
   VERSION: ""
   NEW_VERSION: ""
-  ANSIBLE_PLAYBOOK_PATH: ./ansible/playbook.yml
-  ANSIBLE_INVENTORY_PATH: ./ansible/inventory.ini
+  ANSIBLE_PLAYBOOK_PATH: ../ansible/playbook.yml
+  ANSIBLE_INVENTORY_PATH: ../ansible/inventory.ini
 
 jobs:
   build:
@@ -81,7 +81,7 @@ jobs:
         uses: dawidd6/action-ansible-playbook@v2
         with:
           playbook: ${{ env.ANSIBLE_PLAYBOOK_PATH }}
-          directory: ./ansible/
+          directory: ../ansible/
           key: ${{secrets.SSH_PRIVATE_KEY}}
           inventory: ${{ env.ANSIBLE_INVENTORY_PATH }}
           run: |
