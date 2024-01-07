@@ -10,7 +10,6 @@ env:
   NAME: ""
   VERSION: ""
   NEW_VERSION: ""
-  ANSIBLE_PLAYBOOK_PATH: ./ansible/playbook.yml
 
 jobs:
   build:
@@ -79,12 +78,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
       
-      - name: Deloy wth ansible playbook
+      - name: Deploy wth ansible playbook
         uses: dawidd6/action-ansible-playbook@v2
+      - uses: ./.github/actions/ansible
         with:
-          directory: .
-          playbook: playbook.yml
+          playbook: ./.github/workflows/playbook.yml
           key: ${{secrets.SSH_PRIVATE_KEY}}
-          inventory: |
-            [all]${{ secrets.EC2_IP }}
+          inventory: ./.github/workflows/inventory.ini
           
