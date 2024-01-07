@@ -91,4 +91,6 @@ jobs:
           inventory: |
             [all]
             ${{ secrets.EC2_IP }}  
-            
+          env:
+            NEW_VERSION="$NEW_VERSION"
+           
