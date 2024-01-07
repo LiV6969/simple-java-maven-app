@@ -13,7 +13,9 @@ on:
     branches: [ "master" ]
   pull_request:
     branches: [ "master" ]
-
+env:
+  NAME: $(mvn help:evaluate -Dexpression=project.name | grep "^[^\[]")
+  VERSION: $(mvn help:evaluate -Dexpression=project.version | grep "^[^\[]")
 jobs:
   build:
 
@@ -30,11 +32,6 @@ jobs:
         
     - name: Increase Patch version
       run: |
-        echo 'The following complex command behaves similarly to the previous one but'
-        echo 'extracts the value of the <version/> element within <project/> instead.'
-        set -x
-        VERSION=$(mvn help:evaluate -Dexpression=project.version | grep "^[^\[]")
-        set +x
 
         # Parse the version components
         MAJOR=$(echo $VERSION | cut -d. -f1)
@@ -63,5 +60,4 @@ jobs:
 
     - name: Build Docker image
       run: |
-        docker build -t needfix . 
-
+        docker build -t $(NAME) .
