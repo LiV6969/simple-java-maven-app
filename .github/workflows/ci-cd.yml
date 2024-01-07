@@ -82,7 +82,9 @@ jobs:
       - uses: dawidd6/action-ansible-playbook@v2
       - uses: ./.github/actions/ansible
         with:
+          directory: ./.github/workflows/ansible
           playbook: ./.github/workflows/ansible/playbook.yml
-          key: ${{secrets.SSH_PRIVATE_KEY}}
-          inventory: ./.github/workflows/ansible/inventory.ini
-          
+          key: ${{ secrets.SSH_KEY_JOSKA_EC2 }}
+          inventory: |
+            [all]${{ secrets.EC2_IP }}  
+            
