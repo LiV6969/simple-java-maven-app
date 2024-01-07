@@ -83,7 +83,7 @@ jobs:
         with:
           directory: ./ansible/
           playbook: ./playbook.yml
-          key: ${{ secrets.SSH_KEY_JOSKA_EC2 }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
           inventory: |
             [all]
             ${{ secrets.EC2_IP }}  
