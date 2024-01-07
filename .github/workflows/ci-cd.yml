@@ -47,7 +47,7 @@ jobs:
           echo "NEW_VERSION=$NEW_VERSION" >> $GITHUB_ENV
 
           # Use Maven to set the new version using versions-maven-plugin
-          mvn versions:set -DnewVersion=$NEW_VERSION
+          mvn versions:set -DnewVersion=$NEW_VERSION versions:commit
 
           # Print the new version
           echo "New version: $NEW_VERSION"
