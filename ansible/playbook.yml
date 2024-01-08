@@ -24,7 +24,7 @@
         update_cache: true
     - name: Pull Docker Image
       docker_image:
-        name: "{{ container_image }}:{{ lookup('env', 'NEW_VERSION') }}"
+        name: "{{ container_image }}:latest"
         source: pull
 
 
