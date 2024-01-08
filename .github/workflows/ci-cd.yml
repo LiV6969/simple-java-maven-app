@@ -77,6 +77,7 @@ jobs:
         
       - name: Commit and push updated pom.xml
         run: |
+          git add .
           git config --global user.name "${{ secrets.GIT_NAME }}"
           git config --global user.email "${{ secrets.GIT_MAIL }}"
           git commit -am 'Update version to "${NEW_VERSION}" ' 
