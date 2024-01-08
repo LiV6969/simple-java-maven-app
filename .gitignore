@@ -9,6 +9,8 @@ dependency-reduced-pom.xml
 buildNumber.properties
 .mvn/timing.properties
 credentials.yml
+.ansible_inventory
+.ansible_key
 
 aws-key.pem
 
